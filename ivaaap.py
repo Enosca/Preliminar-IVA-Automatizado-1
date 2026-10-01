@@ -459,7 +459,8 @@ if rol == "Administrador":
 # ---------------------------------------------------------
 # VISTA PRINCIPAL
 # ---------------------------------------------------------
-st.title("🧮 Sistema de Liquidación IVA (ARCA / AFIP Automático)")
+st.title("🧮 Liquidación IVA Gaston (Automático)")
+st.subheader("se actualiza al dia anterior de la fecha actual")
 
 df_ventas = obtener_datos("ventas")
 df_compras = obtener_datos("compras")
