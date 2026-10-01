@@ -1,3 +1,14 @@
+import subprocess
+import sys
+
+# ---------------------------------------------------------
+# Autoinstalación de Chromium para Entornos Cloud (Streamlit Cloud)
+# ---------------------------------------------------------
+try:
+    subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+except Exception as e:
+    print(f"Aviso de instalación de Playwright: {e}")
+
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -11,6 +22,21 @@ from playwright.sync_api import sync_playwright
 
 # Configuración de la página
 st.set_page_config(page_title="Sistema de Liquidación de IVA y Clientes", layout="wide")
+
+# ---------------------------------------------------------
+# Ocultar Marcas de Agua, Menú de Streamlit e Ícono de GitHub
+# ---------------------------------------------------------
+ocultar_estilos_streamlit = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stAppDeployButton {display:none !important;}
+    .viewerBadge_container__1S12D {display:none !important;}
+    a[href*="github.com"] {display:none !important;}
+    </style>
+"""
+st.markdown(ocultar_estilos_streamlit, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # Conexión a Base de Datos (SQLite)
@@ -182,9 +208,9 @@ def extraer_df_de_zip_o_archivo(file_or_path):
                                 return pd.read_csv(io.BytesIO(z.read(f)), sep=';', encoding='latin1')
             elif file_or_path.name.endswith('.csv'):
                 try:
-                    return pd.read_csv(file_or_path, sep=';', encoding='utf-8')
+                    return pd.read_csv(io.BytesIO(z.read(f)), sep=';', encoding='utf-8')
                 except:
-                    return pd.read_csv(file_or_path, sep=';', encoding='latin1')
+                    return pd.read_csv(io.BytesIO(z.read(f)), sep=';', encoding='latin1')
             return pd.read_excel(file_or_path)
     except Exception as e:
         st.error(f"Error leyendo archivo local: {e}")
@@ -459,7 +485,7 @@ with tab_resumen:
     elif saldo_iva < 0:
         st.success(f"✅ **Posición Final:** Saldo a Favor del Contribuyente: **${abs(saldo_iva):,.2f}**")
     else:
-        st.info("ℹ️ **Posición Final:** Saldo Neutro ($0.00)")
+        st.info("ℹ️️ **Posición Final:** Saldo Neutro ($0.00)")
 
     col_v, col_c = st.columns(2)
 
