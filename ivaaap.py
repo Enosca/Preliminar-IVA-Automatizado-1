@@ -24,27 +24,22 @@ from playwright.sync_api import sync_playwright
 st.set_page_config(page_title="Sistema de Liquidación de IVA y Clientes", layout="wide")
 
 # ---------------------------------------------------------
-# Ocultar Marcas de Agua, Menú de Streamlit e Ícono de GitHub
-# (Sin bloquear el botón para abrir la barra lateral)
+# Ocultar la barra superior (Share, Editar, GitHub)
+# manteniendo visible el botón para desplegar la barra lateral
 # ---------------------------------------------------------
 ocultar_estilos_streamlit = """
     <style>
-    /* Oculta el menú de tres puntos de la esquina superior derecha */
+    /* Oculta la barra de acciones de la esquina superior derecha (Share, GitHub, Edit, Star) */
+    [data-testid="stHeaderActionElements"] {display: none !important;}
+    .stAppHeader {background: transparent !important;}
+    
+    /* Oculta el menú de opciones (tres puntos) y pie de página */
     #MainMenu {visibility: hidden;}
-    
-    /* Oculta el pie de página "Made with Streamlit" */
     footer {visibility: hidden;}
+    .stAppDeployButton {display: none !important;}
+    .viewerBadge_container__1S12D {display: none !important;}
     
-    /* Oculta el botón "Deploy" de Streamlit Cloud */
-    .stAppDeployButton {display:none !important;}
-    
-    /* Oculta el badge de marca de agua en la vista previa */
-    .viewerBadge_container__1S12D {display:none !important;}
-    
-    /* Oculta enlaces/logos con destino a GitHub */
-    a[href*="github.com"] {display:none !important;}
-    
-    /* Mantiene visible el botón flotante de abrir/cerrar la barra lateral */
+    /* Mantiene visible el botón de abrir/cerrar el menú lateral */
     [data-testid="stSidebarCollapseButton"] {
         visibility: visible !important;
         display: block !important;
