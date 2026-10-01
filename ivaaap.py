@@ -24,23 +24,33 @@ from playwright.sync_api import sync_playwright
 st.set_page_config(page_title="Sistema de Liquidación de IVA y Clientes", layout="wide")
 
 # ---------------------------------------------------------
-# Ocultar la barra superior (Share, Editar, GitHub)
-# manteniendo visible el botón para desplegar la barra lateral
+# Ocultar la cabecera completa (Share, Editar, GitHub, Menú)
+# y fijar el botón de la barra lateral para que no desaparezca
 # ---------------------------------------------------------
 ocultar_estilos_streamlit = """
     <style>
-    /* Oculta la barra de acciones de la esquina superior derecha (Share, GitHub, Edit, Star) */
-    [data-testid="stHeaderActionElements"] {display: none !important;}
-    .stAppHeader {background: transparent !important;}
+    /* Oculta la cabecera superior completa */
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
     
-    /* Oculta el menú de opciones (tres puntos) y pie de página */
+    /* Oculta la barra de acciones (Share, Edit, Star, GitHub) */
+    [data-testid="stHeaderActionElements"] {
+        display: none !important;
+    }
+    
+    /* Oculta pie de página y menús por defecto */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .stAppDeployButton {display: none !important;}
     .viewerBadge_container__1S12D {display: none !important;}
-    
-    /* Mantiene visible el botón de abrir/cerrar el menú lateral */
+
+    /* Mantiene el botón de la barra lateral visible y accesible en la esquina superior izquierda */
     [data-testid="stSidebarCollapseButton"] {
+        position: fixed !important;
+        top: 10px !important;
+        left: 10px !important;
+        z-index: 999999 !important;
         visibility: visible !important;
         display: block !important;
     }
