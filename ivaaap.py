@@ -25,15 +25,30 @@ st.set_page_config(page_title="Sistema de Liquidación de IVA y Clientes", layou
 
 # ---------------------------------------------------------
 # Ocultar Marcas de Agua, Menú de Streamlit e Ícono de GitHub
+# (Sin bloquear el botón para abrir la barra lateral)
 # ---------------------------------------------------------
 ocultar_estilos_streamlit = """
     <style>
+    /* Oculta el menú de tres puntos de la esquina superior derecha */
     #MainMenu {visibility: hidden;}
+    
+    /* Oculta el pie de página "Made with Streamlit" */
     footer {visibility: hidden;}
-    header {visibility: hidden;}
+    
+    /* Oculta el botón "Deploy" de Streamlit Cloud */
     .stAppDeployButton {display:none !important;}
+    
+    /* Oculta el badge de marca de agua en la vista previa */
     .viewerBadge_container__1S12D {display:none !important;}
+    
+    /* Oculta enlaces/logos con destino a GitHub */
     a[href*="github.com"] {display:none !important;}
+    
+    /* Mantiene visible el botón flotante de abrir/cerrar la barra lateral */
+    [data-testid="stSidebarCollapseButton"] {
+        visibility: visible !important;
+        display: block !important;
+    }
     </style>
 """
 st.markdown(ocultar_estilos_streamlit, unsafe_allow_html=True)
