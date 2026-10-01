@@ -312,7 +312,10 @@ def ejecutar_scraper_afip(cuit, clave_fiscal, tipo_periodo, fecha_desde, fecha_h
 
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=not ver_navegador)
+            browser = p.chromium.launch(
+    headless=not ver_navegador,
+    args=["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
+)
             context = browser.new_context(accept_downloads=True, user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
             page = context.new_page()
 
